@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Dondake\MusicTransposition\Services\Transposition;
 
+use Dondake\MusicTransposition\Enums\Note\OctaveEnum;
 use Dondake\MusicTransposition\Entities\Note\NoteData;
+use Dondake\MusicTransposition\Exceptions\Transposition\TranspositionException;
 
 class NoteTranspositionService implements TranspositionServiceInterface
 {
     /**
-     * @param NoteData[] $items
+     * @inheritDoc
      */
     public function run(array $items, int $param): array
     {
@@ -18,10 +20,25 @@ class NoteTranspositionService implements TranspositionServiceInterface
         }, $items);
     }
 
+    /**
+     * @throws TranspositionException
+     */
     protected function transpose(NoteData $note, int $semitone): array
     {
         $param = $note->octaveNumber * 12 + ($note->noteNumber + $semitone);
 
-        return [floor($param / 12), $param % 12];
+        if ($param < 0) {
+            return [(int)($param / 12 - 1), 12 - abs($param % 12)];
+        }
+
+        --$param;
+
+        $octaveNumber = (int)($param / 12);
+
+        if (!OctaveEnum::tryFrom($octaveNumber)) {
+            throw new TranspositionException('Octave number out from available range!');
+        }
+
+        return [$octaveNumber, $param % 12 + 1];
     }
 }

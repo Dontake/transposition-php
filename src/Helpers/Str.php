@@ -14,7 +14,7 @@ class Str
      */
     public static function getFromConsole(string $value): string
     {
-        if (!str_contains('=', $value)) {
+        if (!str_contains($value, '=')) {
             throw new ConsoleException('Unavailable input format! Available is: paramName=value');
         }
 

@@ -7,14 +7,13 @@ namespace Dondake\MusicTransposition\Console\Commands;
 use Dondake\MusicTransposition\Enums\Storage\FileTypeEnum;
 use Dondake\MusicTransposition\Exceptions\Storage\StorageException;
 use Dondake\MusicTransposition\Exceptions\Console\ConsoleException;
-use Dondake\MusicTransposition\Exceptions\Validators\ValidateException;
 use Dondake\MusicTransposition\Helpers\Str;
 use Dondake\MusicTransposition\Mappers\NoteMapper;
 use Dondake\MusicTransposition\Services\Storage\StorageService;
 use Dondake\MusicTransposition\Services\Transposition\TranspositionServiceInterface;
 use Dondake\MusicTransposition\Validators\Note\NoteInputValidator;
 
-class SemitoneTranspositionCommandAbstract extends AbstractConsoleCommand
+class SemitoneTranspositionCommand extends AbstractConsoleCommand
 {
     public function __construct(
         public string $notesFilePath,
@@ -24,8 +23,6 @@ class SemitoneTranspositionCommandAbstract extends AbstractConsoleCommand
 
     /**
      * @inheritDoc
-     * @throws ValidateException
-     * @throws StorageException
      */
     public function run(): void
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dondake\Enums\Note;
+namespace Dondake\MusicTransposition\Enums\Note;
 
 enum OctaveEnum: int
 {
